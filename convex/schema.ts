@@ -26,7 +26,8 @@ export default defineSchema({
         language: v.string(),
         code: v.string(),
         userName: v.string(),
-        previewImg: v.string()
+        previewImg: v.string(),
+        version: v.string(),
     }).index("by_user_id", ["userId"]),
 
     snippetComments: defineTable({

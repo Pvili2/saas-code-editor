@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { 
     LockOutlined,
     ClockCircleOutlined,
@@ -46,34 +46,35 @@ import { setProjectTitle, setPreviewImg } from '@/lib/reducers/codeStore';
             logging: true,
             windowWidth: 200,
             windowHeight: 400
-          })
-    
-    
+          })    
           dispatch(setPreviewImg(canvas.toDataURL('image/png') ))
-          console.log(prevImg) 
         } catch (error) {
           console.error(error)
           dispatch(setPreviewImg(""))
         }
       }
+
+      useEffect(() =>{
+        async function genPic(){
+          await generatePreview()
+        }
+        genPic()
+      }, [open])
     const save = async () => {
         if (!user?.isPro ) {
-            await generatePreview()
-
-            console.log(prevImg)
-            isSaved({
-              code: code || "",
-              language,
-              previewImg: prevImg,
-              userId: user?._id || "",
-              title: title || "",
-              userName: user?.name || "",
-              version: "",
-            }).then(() => {
-              setIsSuccessSave!(true)
-              dispatch(setProjectTitle(""))
-              onClose()
-            }) 
+              isSaved({
+                code: code || "",
+                language,
+                previewImg: prevImg,
+                userId: user?._id || "",
+                title: title || "",
+                userName: user?.name || "",
+                version: "",
+              }).then(() => {
+                setIsSuccessSave!(true)
+                dispatch(setProjectTitle(""))
+                onClose()
+              }) 
           }
         }
     return (

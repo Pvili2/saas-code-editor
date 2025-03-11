@@ -21,7 +21,7 @@ function RunBar({canvasRef}: {canvasRef: RefObject<HTMLDivElement>}) {
     const code = useSelector((state: RootState) => state.codeReducer.value)
     const language = useSelector((state :RootState) => state.codeReducer.language)
     const onSave = () => {
-        if (user?.isPro) {
+        if (!user?.isPro) {
           setIsProModalOpen(true);
         }else {
             setIsModalOpen(true);
